@@ -1,1 +1,48 @@
-<p>dashboard works!</p>
+
+<div class="header">
+    <h2>Dashboard</h2>
+
+  <button (click)="logout()" class="logout-btn">Logout</button>
+</div>
+
+<div class="dashboard_section">
+
+
+<div class="form-container">
+  <form (ngSubmit)="editRecord.id ? updateRecord(editRecord) : addRecord(editRecord)" class="form_box">
+    <h2>Add/Update data</h2>
+  <input type="text" [(ngModel)]="editRecord.name" name="name" class="input_text" placeholder="Name" required />
+  <input type="number" [(ngModel)]="editRecord.age" name="age" class="input_text" placeholder="Age" required />
+  <input type="text" [(ngModel)]="editRecord.course" name="course" class="input_text" placeholder="Course" required />
+  
+  <button type="submit" class="form_btn">{{ editRecord.id ? 'Update' : 'Add' }}</button>
+  <button type="button" class="form_btn" *ngIf="editRecord.id" (click)="resetForm()">Cancel</button>
+</form>
+</div>
+<div class="dashboard-container">
+    <h2>Student Data</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Course</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of records">
+        <td>{{ record.id }}</td>
+        <td>{{ record.name }}</td>
+        <td>{{ record.age }}</td>
+        <td>{{ record.course }}</td>
+        <td>
+          <button (click)="edit(record.id)">Edit</button>
+          <button (click)="deleteRecord(record.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>

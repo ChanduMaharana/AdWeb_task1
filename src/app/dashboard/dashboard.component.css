@@ -1,0 +1,163 @@
+.header{
+    display: flex;
+    background-color: #3498db;
+    gap: 70px;
+    height: 60px;
+    color: white;
+}
+.header h2{
+    margin: 10px;
+}
+.logout-btn{
+    background-color: white;
+    color: #3498db;
+    border: none;
+    width: 70px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 5px;
+    margin-left: 70%;
+}
+.logout-btn:hover {
+  cursor: pointer;
+  border: 2px solid white;
+  font-weight: 300;
+  background-color: #2980b9;
+  color: white;
+}
+.dashboard-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  height: 320px;
+  padding: 20px;
+  display: table-column;
+  justify-content: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+
+
+.dashboard-container > button {
+  float: right;
+  padding: 8px 16px;
+  background: #e74c3c;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.dashboard-container > button:hover {
+  background: #c0392b;
+}
+.dashboard_section{
+    display: flex;
+}
+.dashboard-container h2{
+    color: #3498db;
+}
+
+.form-container {
+  width: 400px;
+  height: 400px;
+  margin-top: 50px;
+  display: flex;
+  margin: 0 auto;
+}
+.form_box{
+  width: 400px;
+  height: 300px;
+  margin-top: 50px;
+  padding: 30px;
+  background-color: white;
+  box-shadow: 0px 4px  10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form_box h2{
+    color: #3498db;
+}
+.input_text {
+  border: 1px solid #ccc;
+  padding: 12px;
+  width: 350px;
+  outline: none;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+form button {
+  padding: 12px;
+  margin-top: 20px;
+  width: 380px;
+  border: none;
+  border-radius: 6px;
+  background-color: #87ceeb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form_btn:hover {
+  background: #27ae60;
+}
+
+.form_btn {
+  background: #7f8c8d;
+}
+.form_btn:hover {
+  background: #666;
+}
+
+table {
+  width: 600px;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+table th {
+  background: #f4f4f4;
+  color: #37414b;
+}
+
+table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+table button {
+  margin: 0 4px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+}
+
+table button:first-child {
+  background: #3498db; 
+}
+table button:first-child:hover {
+  background: #2980b9;
+}
+
+table button:last-child {
+  background: #e74c3c; 
+}
+table button:last-child:hover {
+  background: #c0392b;
+}
