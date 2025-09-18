@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthServiceService } from '../auth.service.service';
+import { StudentServiceService , Student} from '../student.service.service';
+import { Observable } from 'rxjs';
 
 interface student {
   id : number;
@@ -17,73 +20,59 @@ interface student {
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  records: student[] = [];
-editRecord: student = { id: 0, name: '', age: 0, course: '' };
+ students$! : Observable<Student[]>;
 
-  constructor(private router : Router){}
+editRecord: Student = { id: '', name: '', age: 0, course: '' };
+
+  constructor(
+    private router: Router, 
+    private authService: AuthServiceService,
+    private studentService: StudentServiceService
+  ) {}
+
 
   ngOnInit(): void{
-    this.loadRecords();
     this.checkLogin();
+    this.loadStudents();
   }
 
   checkLogin() {  
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if(!loggedInUser){
+    if(!this.authService.getCurrentUser){
       this.router.navigate(['/login']);
     }
   }
 
-  loadRecords(){
-    const data = localStorage.getItem('records');
-    if(data){
-      this.records = JSON.parse(data);
-    }else{
-      this.records = [
-        { id: 1, name: 'chandu', age: 22, course: 'Angular' },
-        { id: 2, name: 'sameer', age: 21, course: 'React' },
-      ];
-      localStorage.setItem('records', JSON.stringify(this.records));
-    }
-  }
-  saveRecords(){
-    localStorage.setItem('records',JSON.stringify(this.records));
+  loadStudents(){
+    this.students$ = this.studentService.getStudents();
   }
 
-  addRecord(newRecord: student){
-    newRecord.id = this.records.length? this.records[this.records.length - 1].id+1 : 1;
-
-    this.records.push(newRecord);
-    this.saveRecords();
+  addRecord(newRecord: Student){
+    if(!newRecord.name || !newRecord.course)return;
+    this.studentService.addStudent(newRecord);
   }
 
-  updateRecord(updated: student){
-    const index = this.records.findIndex((r) => r.id === updated.id);
-
-    if(index !== -1){
-      this.records[index] = updated;
-      this.saveRecords();
+  updateRecord(student: Student) {
+    if (student.id) {
+      this.studentService.updateStudent(student);
+      this.resetForm();
     }
   }
 
-  deleteRecord(id: number){
-    this.records = this.records.filter((r) => r.id !== id);
-    this.saveRecords();
+  deleteRecord(id: string | undefined){
+    if(id){
+      this.studentService.deleteStudent(id);
+    }
   }
 
-  edit(id: number){
-    const record = this.records.find((r)=> r.id === id);
-    if(record){
-      this.editRecord = { ...record};
-    }
+  edit(student: Student){
+    this.editRecord = { ...student};
   }
   resetForm() {
-  this.editRecord = { id: 0, name: '', age: 0, course: '' };
+  this.editRecord = { id: '', name: '', age: 0, course: '' };
 }
 
 
   logout(){
-    localStorage.removeItem('loggedInUser');
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 }

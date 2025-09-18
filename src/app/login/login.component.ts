@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { AuthServiceService } from '../auth.service.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,22 +15,20 @@ export class LoginComponent {
   email: string;
   password: string;
   error: string;
-  constructor(private router : Router){
+  constructor(private router : Router, private authService:AuthServiceService){
     this.email = '';
     this.password = '';
     this.error = '';
   }
 
-  onLogin(){
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    const user = users.find((user: any)=> user.email== this.email && user.password == this.password);
-
-    if(user){
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-      this.router.navigate(['/dashboard']);
-    }else{
-      this.error = 'Invalid email or password!';
-    }
+  async onLogin() {
+  try {
+    await this.authService.login(this.email, this.password);
+    this.router.navigate(['/dashboard']);
+  } catch (err: any) {
+    this.error = 'Invalid email or password';
+    console.error(err);
   }
+}
+
 }

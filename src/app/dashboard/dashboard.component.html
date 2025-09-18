@@ -24,7 +24,6 @@
   <table>
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Age</th>
         <th>Course</th>
@@ -32,14 +31,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let record of records">
-        <td>{{ record.id }}</td>
-        <td>{{ record.name }}</td>
-        <td>{{ record.age }}</td>
-        <td>{{ record.course }}</td>
+      <tr *ngFor="let student of students$ | async">
+        <td>{{ student.name }}</td>
+        <td>{{ student.age }}</td>
+        <td>{{ student.course }}</td>
         <td>
-          <button (click)="edit(record.id)">Edit</button>
-          <button (click)="deleteRecord(record.id)">Delete</button>
+          <button (click)="edit(student)">Edit</button>
+          <button (click)="deleteRecord(student.id)">Delete</button>
         </td>
       </tr>
     </tbody>

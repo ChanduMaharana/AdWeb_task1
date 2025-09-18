@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthServiceService } from '../auth.service.service';
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -15,23 +16,16 @@ export class SignupComponent {
   password: string = '';
   error: string = '';
 
-  constructor(private router : Router){ }
+  constructor(private router : Router, private authService :AuthServiceService){ }
 
-  onSignup(){
-  
-  let users = JSON.parse(localStorage.getItem('users') || '[]');
-
-  const userExists = users.some((user:any) => user.email == this.email);
-
-  if(userExists){
-    this.error = 'Email already exists!';
-    return
+  async onSignup(){
+    try{
+      await this.authService.signup(this.email, this.password);
+      this.router.navigate(['/login']);
+    }catch(err:any){
+    
+      console.error("Signup error:", err);
+    this.error = err.message;
+    }
   }
-
-  const newUser= {username: this.username, email :this.email, password: this.password};
-  users.push(newUser);
-  localStorage.setItem('users', JSON.stringify(users));
-
-  this.router.navigate(['/login']);
-}
 }
